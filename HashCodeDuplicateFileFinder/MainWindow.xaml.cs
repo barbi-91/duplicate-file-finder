@@ -17,6 +17,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -57,6 +58,7 @@ namespace HashCodeDuplicateFileFinder
         private bool _isTrue;
         private List<FileHashes> _filesListInfo = new List<FileHashes>();
         private List<FilesGroupedByHash> _data = new List<FilesGroupedByHash>();
+
 
 
         //dictionary fill list with size (unique or identical hashes), key is size
@@ -215,39 +217,29 @@ namespace HashCodeDuplicateFileFinder
                             FileHashes individualFile = new FileHashes(fileNamefromPath, fileHashContentfromPath, pathItem, fileByteSizefromPath, lastModified);
 
                             //group by single property- hash
-                            
                             _filesListInfo.Add(individualFile);
 
                             //file counter
                             _countFiles += 1;
                         }
-
-                        FilesGroupedByHash ctor = new FilesGroupedByHash(pairItem.Key, _filesListInfo);
-                        _data.Add(ctor);
-
-            
-                        _filesListInfo = new List<FileHashes>();
+                        
                     }
-                   
-                   
-                    int _numberOfHashes = 1;
-                    //_fileIdenticalSizeAndHashes = _fileIdenticalSizeAndHashes + _countFiles;
-                    _fileIdenticalSizeAndHashes = _fileIdenticalSizeAndHashes + _numberOfHashes;
+
+                    _fileIdenticalSizeAndHashes = _fileIdenticalSizeAndHashes + _countFiles;
                     bool HaveMoreThanOne = (_fileIdenticalSizeAndHashes >= 1);
                     if (HaveMoreThanOne)
-                        lblFilesCount.Content = string.Concat("Contains: ", _fileIdenticalSizeAndHashes, " groups with identical content in each group (duplicate files)");
+                        lblFilesCount.Content = string.Concat("Contains: ", _fileIdenticalSizeAndHashes, " duplicate files");
                     else
-                        lblFilesCount.Content = string.Concat("Contains: ", _fileIdenticalSizeAndHashes, " group with identical content inside (duplicate files)");
-
-                   
+                        lblFilesCount.Content = string.Concat("Contains: ", _fileIdenticalSizeAndHashes, " duplicate file");
                 }
-                lstTableInfo.ItemsSource = _data;
 
+                var _data = GroupBySingleProperty(_filesListInfo);
+                lstTableInfo.ItemsSource = _data;
 
                 bool NoFileInFolder = (_fileIdenticalSizeAndHashes == 0);
                 if (NoFileInFolder)
                 {
-                    lblFilesCount.Content = string.Concat("Contains: 0 duplicate groups with duplicate files");
+                    lblFilesCount.Content = string.Concat("Contains: 0 duplicate file in folder");
                     btnDelete.Visibility = Visibility.Hidden;
                     System.Windows.MessageBox.Show("There is no duplicate file in the folder!");
                     ClearMaster();
@@ -260,6 +252,7 @@ namespace HashCodeDuplicateFileFinder
             }
         }
 
+        
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             List<FileHashes> deletingListFH = new List<FileHashes>();
@@ -267,6 +260,7 @@ namespace HashCodeDuplicateFileFinder
             var counterGL = 0;
             var counterDel = 0;
 
+            var _data = GroupBySingleProperty(_filesListInfo);
             foreach (var d in _data)
             {
                 foreach (var hgl in d.HeshesGroupListGP)
@@ -274,7 +268,7 @@ namespace HashCodeDuplicateFileFinder
                     counterGL = d.HeshesGroupListGP.Count;
                     if (hgl.IsChecked)
                     {
-                        
+
                         deletingListFH.Add(hgl);
                         File.Delete(hgl.PathP);
                     }
@@ -297,19 +291,23 @@ namespace HashCodeDuplicateFileFinder
                 counterDel = 0;
             }
             foreach (var dl in deleteGroupbyHash)
-            {
+{
                 _data.Remove(dl);
             }
             lstTableInfo.ItemsSource = null;
             lstTableInfo.ItemsSource = _data;
 
+            deleteGroupbyHash = new List<FilesGroupedByHash>();
+            
             lblFilesCount.Content = ($"Contains:  {lstTableInfo.Items.Count} group/s with identical content in each group (duplicate files)");
             System.Windows.MessageBox.Show("Duplicate file/s deleted!", "Information", MessageBoxButton.OK);
         }
+
         private void btnCLearAll_Click(object sender, RoutedEventArgs e)
         {
             ClearMaster();
         }
+
 
         private void Copy_Click(object sender, RoutedEventArgs e)
         {
@@ -320,10 +318,12 @@ namespace HashCodeDuplicateFileFinder
                 System.Windows.Forms.Clipboard.SetData(System.Windows.Forms.DataFormats.Text, (object)copyText);
             }
         }
+
         #endregion event
 
 
-         #region method
+        #region method
+
         public string CreateMD5(byte[] ArrayFileContent)
         {
             MD5 md5 = MD5.Create();
@@ -363,6 +363,18 @@ namespace HashCodeDuplicateFileFinder
             btnCLearAll.IsEnabled = false;
             btnCLearAll.BorderBrush = Brushes.Red;
             btnDelete.Visibility = Visibility.Hidden;
+        }
+
+        private List<FilesGroupedByHash> GroupBySingleProperty(List<FileHashes> filesHashesList)
+        {
+            List<FilesGroupedByHash> queryHash =
+                (from file in filesHashesList
+                 group file by file.HashP into newGroup
+                 orderby newGroup.Key
+                 //select newGroup;
+                 select new FilesGroupedByHash(newGroup.Key, newGroup.ToList()))
+                .ToList();
+            return queryHash;
         }
         #endregion method
     }

@@ -72,7 +72,7 @@
             </TextBlock>
         </Grid>
 
-        <ListView x:Name="lstTableInfo" Grid.Row="3" FontSize="15" Background="MediumPurple" Grid.ColumnSpan="2" Width="auto"
+        <ListView x:Name="lstTableInfo" Grid.Row="3" FontSize="15" Background="MediumPurple" Grid.ColumnSpan="2" 
                   Margin="5,0,5,5">
             <ListView.View>
 
@@ -80,7 +80,7 @@
                     <GridView.Columns>
                         
                         <!--#COLUMN1--><!-- hash-->
-                        <GridViewColumn DisplayMemberBinding="{Binding HashGP}" Header="Hash by Content" Width="300"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding HashGP}" Header="Hash by Content"/>
 
                         <!--<GridViewColumn Header="Hash by Content">
                             <GridViewColumn.CellTemplate>
@@ -92,7 +92,7 @@
                         
                         <!--#COLUMN2-->
 
-                        <GridViewColumn Header="File Info" Width="auto">
+                        <GridViewColumn Header="File Info">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
 
@@ -116,8 +116,6 @@
                                                     <GridViewColumn DisplayMemberBinding="{Binding PathP}" Header="Path"/>
 
                                                     <GridViewColumn DisplayMemberBinding="{Binding LastModifiedP}" Header="Last Modified"/>
-
-                                                    <GridViewColumn DisplayMemberBinding="{Binding HashP}" Header="Hash by Content"/>
 
                                                 </GridView.Columns>
                                             </GridView>

@@ -14,7 +14,6 @@ namespace HashCodeDuplicateFileFinder
         #endregion
 
 
-        
         public FilesGroupedByHash(string hash, List<FileHashes> fileinfo)
         {
             HashGP = hash;
