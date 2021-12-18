@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-namespace HashcodeFile
+namespace HashCodeFileSame
 {
-    class FileHash
+    class FileHashes
     {
 
-       
         //property
         public string FileNameP
         {
@@ -36,13 +34,25 @@ namespace HashcodeFile
             set;
         }
 
-        public FileHash(string fName, string fHash, string fPath, long fSize)
+        public DateTime LastModifiedP 
+        { 
+            get;
+            set; 
+        }
+
+        public bool IsChecked
+        {
+            get;
+            set;
+        }
+
+        public FileHashes(string fName, string fHash, string fPath, long fSize, DateTime lastModified)
         {
             FileNameP = fName;
             HashP = fHash;
             PathP = fPath;
             FileSizeP = fSize;
+            LastModifiedP = lastModified;
         }
-
     }
 }
