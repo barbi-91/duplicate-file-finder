@@ -1,0 +1,69 @@
+﻿<Window x:Class="HashcodeFile.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HashcodeFile"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid Background="LightGray">
+        <Grid.RowDefinitions >
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Label FontSize="16" Foreground="Purple" FontWeight="Bold" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="103,0"
+               >Select Folder and calculate Hash of all Files in selected Folder by file Content:</Label>
+        <ToolBarTray Grid.Row="1" Grid.ColumnSpan="2"  >
+            <ToolBar>
+                <!--button1-->
+                <Button x:Name="btnSelectFolder" FontSize="14"  BorderBrush="Purple" Width="auto"
+                        Background="LightYellow" Click="btnSelectFolder_Click" BorderThickness="2" Margin="10,0,10,0">
+                    <DockPanel LastChildFill="True">
+                        <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="Purple" FontSize="12">Select Folder</Label>
+                        <Image Width="30" Source="/Images/select.png" ToolTip="Select folder"/>
+                    </DockPanel>
+                </Button>
+                <!--button2-->
+                <Button x:Name="btnCalculateHash"  BorderThickness="2" BorderBrush="Purple" Width="auto"
+                        Background="LightGreen" Click="btnCalculateHash_Click" ToolTip="Calcualte Hash by Content of File">
+                    <DockPanel LastChildFill="True">
+                        <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="Purple" FontSize="12" >Calculate Hash</Label>
+                        <Image Width="30" Source="/Images/play.png" ToolTip="Select folder"/>
+                    </DockPanel>
+                </Button>
+                <Separator/>
+                <!--button3-->
+                <Button x:Name="btnCLearAll"  BorderThickness="2" BorderBrush="Purple" Width="80" Margin="5,0,5,0"
+                        Background="LightBlue" Click="btnCLearAll_Click" ToolTip="Clear all data">
+                    <DockPanel LastChildFill="True">
+                        <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="Purple" FontSize="12">Clear </Label>
+                        <Image Width="30" Source="/Images/eraser.png" ToolTip="Select folder"/>
+                    </DockPanel>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <TextBlock Grid.Row="2" x:Name="txtblockPath"  FontSize="14" Foreground="Purple" FontStyle="Italic"  Margin="5"
+                           VerticalAlignment="Center" Background="LavenderBlush" Padding="15,5,10,5" Text="Path: " FontWeight="Bold" Grid.ColumnSpan="2" />
+        <ListView x:Name="lstTabelInfo" Grid.Row="3" FontSize="15" Background="Plum" Grid.ColumnSpan="2" Margin="5,0,5,5">
+            <ListView.View>
+
+                <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="File Informations">
+
+                    <GridViewColumn x:Name="gvFileName" DisplayMemberBinding="{Binding FileNameP}" Header="File name"/>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding FileSizeP}" Header="File size"/>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding HashP}" Header="Content Hash"/>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding PathP}" Header="Path"/>
+
+                </GridView>
+
+            </ListView.View>
+        </ListView>
+        <Label Grid.Row="4" x:Name="lblFilesCount" Height="30" FontSize="12" Margin="5,0,5,0" VerticalContentAlignment="Center">Contains: </Label>
+    </Grid>
+</Window>
