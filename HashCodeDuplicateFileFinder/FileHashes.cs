@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HashCodeFileSame
+namespace HashCodeDuplicateFileFinder
 {
     class FileHashes
     {
@@ -34,10 +34,10 @@ namespace HashCodeFileSame
             set;
         }
 
-        public DateTime LastModifiedP 
-        { 
+        public DateTime LastModifiedP
+        {
             get;
-            set; 
+            set;
         }
 
         public bool IsChecked

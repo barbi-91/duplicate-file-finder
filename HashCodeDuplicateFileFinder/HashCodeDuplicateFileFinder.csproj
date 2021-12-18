@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6DC5420C-58DC-448F-B438-B406239EE79C}</ProjectGuid>
+    <ProjectGuid>{B5AE5892-D9F3-48B3-91DB-1D077D53B66A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>HashCodeFileSame</RootNamespace>
-    <AssemblyName>HashCodeFileSame</AssemblyName>
+    <RootNamespace>HashCodeDuplicateFileFinder</RootNamespace>
+    <AssemblyName>HashCodeDuplicateFileFinder</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -35,11 +35,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WindowsAPICodePack-Core.1.1.2\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAPICodePack-Core.1.1.0.2\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\WindowsAPICodePack-Shell.1.1.1\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.ShellExtensions, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAPICodePack-Shell.1.1.0.0\lib\Microsoft.WindowsAPICodePack.ShellExtensions.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -52,6 +55,27 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WinCopies.Collections, Version=3.13.0.0, Culture=neutral, PublicKeyToken=f9484d8631da4808, processorArchitecture=MSIL">
+      <HintPath>..\packages\WinCopies.Collections.3.13.0-preview\lib\net472\WinCopies.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="WinCopies.Util, Version=3.13.0.0, Culture=neutral, PublicKeyToken=b5104787c7414d1f, processorArchitecture=MSIL">
+      <HintPath>..\packages\WinCopies.Util.3.13.0-preview\lib\net472\WinCopies.Util.dll</HintPath>
+    </Reference>
+    <Reference Include="WinCopies.WindowsAPICodePack, Version=3.7.3.0, Culture=neutral, PublicKeyToken=2bbcfe4b64d64adf, processorArchitecture=MSIL">
+      <HintPath>..\packages\WinCopies.WindowsAPICodePack.3.7.3-preview\lib\net472\WinCopies.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="WinCopies.WindowsAPICodePack.COMNative, Version=3.7.1.0, Culture=neutral, PublicKeyToken=84677da5dc220e05, processorArchitecture=MSIL">
+      <HintPath>..\packages\WinCopies.WindowsAPICodePack.COMNative.3.7.1-preview\lib\net472\WinCopies.WindowsAPICodePack.COMNative.dll</HintPath>
+    </Reference>
+    <Reference Include="WinCopies.WindowsAPICodePack.Consts, Version=3.7.0.0, Culture=neutral, PublicKeyToken=8c8f5062b8956f3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\WinCopies.WindowsAPICodePack.Consts.3.7.0-preview\lib\net472\WinCopies.WindowsAPICodePack.Consts.dll</HintPath>
+    </Reference>
+    <Reference Include="WinCopies.WindowsAPICodePack.Shell, Version=3.8.2.0, Culture=neutral, PublicKeyToken=a3abd206f963dedc, processorArchitecture=MSIL">
+      <HintPath>..\packages\WinCopies.WindowsAPICodePack.Shell.3.8.2-preview\lib\net472\WinCopies.WindowsAPICodePack.Shell.dll</HintPath>
+    </Reference>
+    <Reference Include="WinCopies.WindowsAPICodePack.Win32Native, Version=3.8.0.0, Culture=neutral, PublicKeyToken=2fef3e4fa240e9f6, processorArchitecture=MSIL">
+      <HintPath>..\packages\WinCopies.WindowsAPICodePack.Win32Native.3.8.0-preview\lib\net472\WinCopies.WindowsAPICodePack.Win32Native.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -71,6 +95,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="FileHashes.cs" />
+    <Compile Include="FilesGroupedByHash.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -103,13 +128,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\trash.png" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Images\eraser.png" />
     <Resource Include="Images\play.png" />
     <Resource Include="Images\select.png" />
+    <Resource Include="Images\trash.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

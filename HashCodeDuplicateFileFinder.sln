@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HashCodeFileSame", "HashCodeFileSame\HashCodeFileSame.csproj", "{6DC5420C-58DC-448F-B438-B406239EE79C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HashCodeDuplicateFileFinder", "HashCodeDuplicateFileFinder\HashCodeDuplicateFileFinder.csproj", "{B5AE5892-D9F3-48B3-91DB-1D077D53B66A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6DC5420C-58DC-448F-B438-B406239EE79C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6DC5420C-58DC-448F-B438-B406239EE79C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6DC5420C-58DC-448F-B438-B406239EE79C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6DC5420C-58DC-448F-B438-B406239EE79C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5AE5892-D9F3-48B3-91DB-1D077D53B66A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5AE5892-D9F3-48B3-91DB-1D077D53B66A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5AE5892-D9F3-48B3-91DB-1D077D53B66A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5AE5892-D9F3-48B3-91DB-1D077D53B66A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {D5F6D79C-6733-4A82-ACA4-6DBBB73BCA51}
+		SolutionGuid = {98A9ED45-5D34-45DB-9F7F-01DA4A3B61BA}
 	EndGlobalSection
 EndGlobal

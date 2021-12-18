@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace HashCodeFileSame
+namespace HashCodeDuplicateFileFinder
 {
     /// <summary>
     /// Interaction logic for App.xaml
