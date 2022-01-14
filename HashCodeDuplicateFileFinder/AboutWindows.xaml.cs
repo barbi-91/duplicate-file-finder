@@ -69,7 +69,7 @@ namespace HashCodeDuplicateFileFinder
                     e.Handled = true;
                 }
                 else
-                    MessageBox.Show("HashCodeDuplicateFileFinderDocumentationDocumentation.txt in application folder.");
+                    MessageBox.Show("HashCodeDuplicateFileFinderDocumentation.txt in application folder.");
             }
             catch (Exception ex)
             {

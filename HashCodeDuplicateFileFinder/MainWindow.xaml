@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HashCodeDuplicateFileFinder"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="HashCodeDuplicateFileFinder" Height="450" Width="800">
     <Grid Background="LightGray">
         <Grid.RowDefinitions >
             <RowDefinition Height="auto"/>
@@ -14,7 +14,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Label FontSize="16" Foreground="BlueViolet" FontWeight="Bold" HorizontalAlignment="Center" Margin="10,0,5,0" Width="780"
+        <Label Name="lblTitle" FontSize="16" Foreground="BlueViolet" FontWeight="Bold" HorizontalAlignment="Center" Margin="10,0,5,0" Width="780"
                >Select Folder and calculate Hash of all repetitive files (identical content):</Label>
         <ToolBarTray Grid.Row="1" Grid.ColumnSpan="2"  >
             <ToolBar>
@@ -43,19 +43,20 @@
                         <Image Width="30" Source="/Images/eraser.png"/>
                     </DockPanel>
                 </Button>
+                <!--button4-->
+                <Button x:Name="btnDelete" Visibility="Collapsed" BorderThickness="2" BorderBrush="Purple" Width="80" Margin="5,0,5,0" IsEnabled="True"
+                        Background="LavenderBlush" Click="btnDelete_Click" ToolTip="Delete selected (duplicate) file/s from folder">
+                    <DockPanel LastChildFill="True">
+                        <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="Purple" FontSize="12">Delete</Label>
+                        <Image Width="30" Source="/Images/trash.png"/>
+                    </DockPanel>
+                </Button>
+                <!--button5-->
                 <Button x:Name="btnAbout"  BorderThickness="2" BorderBrush="Purple" Width="80" Margin="0,0,5,0" IsEnabled="True"
                         Background="LightCyan" Click="btnAbout_Click" ToolTip="About and help">
                     <DockPanel LastChildFill="True">
                         <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="Purple" FontSize="12">About</Label>
                         <Image Width="30" Source="/Images/about.png"/>
-                    </DockPanel>
-                </Button>
-                <!--button4-->
-                <Button x:Name="btnDelete" Visibility="Hidden" BorderThickness="2" BorderBrush="Purple" Width="80" Margin="5,0,5,0" IsEnabled="True"
-                        Background="LavenderBlush" Click="btnDelete_Click" ToolTip="Delete selected (duplicate) file/s from folder">
-                    <DockPanel LastChildFill="True">
-                        <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="Purple" FontSize="12">Delete</Label>
-                        <Image Width="30" Source="/Images/trash.png"/>
                     </DockPanel>
                 </Button>
             </ToolBar>

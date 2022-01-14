@@ -9,7 +9,7 @@ namespace HashCodeDuplicateFileFinder
     class FileHashes
     {
 
-        //property
+        // Property
         public string FileNameP
         {
             get;

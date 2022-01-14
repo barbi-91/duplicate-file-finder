@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HashCodeDuplicateFileFinder"
         mc:Ignorable="d"
-        Title="AboutWindows" Height="270" Width="800" Loaded="Window_Loaded">
+        Title="About" Height="270" Width="800" Loaded="Window_Loaded">
     <Grid Background="LavenderBlush">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>

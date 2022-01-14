@@ -4,6 +4,7 @@ using System.IO;
 
 using System.Linq;
 using System.Security.Cryptography;
+using System.Security.Policy;
 using System.Text;
 using System.Windows;
 using System.Windows.Media;
@@ -35,14 +36,14 @@ namespace HashCodeDuplicateFileFinder
         private bool _isTrue;
         private List<FileHashes> _filesListInfo = new List<FileHashes>();
         private List<FilesGroupedByHash> _data = new List<FilesGroupedByHash>();
-        //dictionary fill list with size (unique or identical hashes), key is size
+        // Dictionary fill list with size (unique or identical hashes), key is size
         private Dictionary<long, List<string>> dictionaryIdenticalSize = new Dictionary<long, List<string>>();
-        //dictionary fill list with hashes (unique or identical), key is hash
+        // Dictionary fill list with hashes (unique or identical), key is hash
         private Dictionary<string, List<string>> dictionaryIdenticalHash = new Dictionary<string, List<string>>();
         #endregion fields
 
         #region Event
-        //button1 -select folder 
+        // Button1 -select folder 
         private void btnSelectFolder_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -61,7 +62,7 @@ namespace HashCodeDuplicateFileFinder
                     _isTrue = (_filesCount >= 1);
                     if (_isTrue)
                     {
-                        //System.Windows.MessageBox.Show("Folder is selected, ready for calculate files Hash!", "Information", MessageBoxButton.OK);
+                        // System.Windows.MessageBox.Show("Folder is selected, ready for calculate files Hash!", "Information", MessageBoxButton.OK);
                         lblFilesCount.Content = "Folder is selected, ready for calculate files Hash!";
                         BtnColorReseterAndEnabler(Brushes.Green, Brushes.Red, Brushes.Red, true, false, false);
                     }
@@ -74,8 +75,7 @@ namespace HashCodeDuplicateFileFinder
                 System.Windows.MessageBox.Show(ex.Message, ERROR, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-        //button2 -identical hash (identical size) calculate
+        // Button2 -identical hash (identical size) calculate
         private void btnCalculateHash_Click(object sender, RoutedEventArgs e)
         {
             if (_isTrue)
@@ -83,10 +83,11 @@ namespace HashCodeDuplicateFileFinder
                 BtnColorReseterAndEnabler(Brushes.Red, Brushes.Red, Brushes.Green, false, false, true);
                 btnDelete.Visibility = Visibility.Visible;
                 btnDelete.BorderBrush = Brushes.Green;
+                lblTitle.Content = "Hash of all repetitive files(identical content):";
 
                 foreach (string pathItem in _allPaths)
                 {
-                    ////BYTE SIZE
+                    // BYTE SIZE
                     FileInfo infoSize = new FileInfo(pathItem);
                     long fileByteSizefromPath = infoSize.Length;
 
@@ -100,15 +101,15 @@ namespace HashCodeDuplicateFileFinder
                         dictionaryIdenticalSize.Add(fileByteSizefromPath, new List<string> { pathItem });
                     }
                 }
-                //single out pairs with multiple values
+                // Single out pairs with multiple values
                 foreach (var pairItem in dictionaryIdenticalSize)
                 {
                     int count = pairItem.Value.Count();
                     bool isUniqueSize = count == 1;
-                    //elimination all pairs with only one value(path)
+                    // Elimination all pairs with only one value(path)
                     if (isUniqueSize)
                     {
-                        //not to disturb the counter in loop -continue
+                        // Not to disturb the counter in loop -continue
                         continue;
                     }
                     else
@@ -116,13 +117,13 @@ namespace HashCodeDuplicateFileFinder
                         _countFiles = 0;
                         foreach (string pathItem in pairItem.Value)
                         {
-                            //////file content Size in bytes for MD5
+                            // File content Size in bytes for MD5
                             byte[] fileContentBytesSizefromPath = File.ReadAllBytes(pathItem);
 
-                            //file hash from content string
+                            // File hash from content string
                             string fileHashContentfromPath = CreateMD5(fileContentBytesSizefromPath);
 
-                            //fil dictionary by Hash (key: hash, value: path)
+                            // Fil dictionary by Hash (key: hash, value: path)
                             if (dictionaryIdenticalHash.ContainsKey(fileHashContentfromPath))
                             {
                                 dictionaryIdenticalHash[fileHashContentfromPath].Add(pathItem);
@@ -134,15 +135,14 @@ namespace HashCodeDuplicateFileFinder
                         }
                     }
                 }
-                //filter by identical hash
+                // Filter by identical hash
                 foreach (var pairItem in dictionaryIdenticalHash)
                 {
                     int count = pairItem.Value.Count();
                     bool isUniqueHash = count == 1;
-                    //elimination all pairs with only one value(path)
+                    // Elimination all pairs with only one value(path)
                     if (isUniqueHash)
                     {
-                        //dictionaryIdenticalHashidenticalSize.Remove(pairItem.Key); 
                         continue;
                     }
                     else
@@ -150,29 +150,29 @@ namespace HashCodeDuplicateFileFinder
                         _countFiles = 0;
                         foreach (string pathItem in pairItem.Value)
                         {
-                            ////Byte size for ctor-property long size
+                            // Byte size for ctor-property long size
                             FileInfo infoSize = new FileInfo(pathItem);
                             long fileByteSizefromPath = infoSize.Length;
 
-                            ////filename
+                            // Filename
                             string fileNamefromPath = System.IO.Path.GetFileName(pathItem);
 
-                            //////file content Size in bytes for MD5
+                            // File content Size in bytes for MD5
                             byte[] fileContentBytesSizefromPath = File.ReadAllBytes(pathItem);
 
-                            //file hash from content string
+                            // File hash from content string
                             string fileHashContentfromPath = CreateMD5(fileContentBytesSizefromPath);
 
-                            //file info last modified
+                            // File info last modified
                             DateTime lastModified = File.GetLastWriteTime(pathItem);
 
-                            //////ctor
+                            // Instantiate object of file hashes class
                             FileHashes individualFile = new FileHashes(fileNamefromPath, fileHashContentfromPath, pathItem, fileByteSizefromPath, lastModified);
 
-                            //group by single property- hash add to listview
+                            // Group by single property- hash add to listview
                             _filesListInfo.Add(individualFile);
 
-                            //file counter
+                            // File counter
                             _countFiles += 1;
                         }
                         FilesGroupedByHash ctor = new FilesGroupedByHash(pairItem.Key, _filesListInfo);
@@ -180,7 +180,6 @@ namespace HashCodeDuplicateFileFinder
                         _filesListInfo = new List<FileHashes>();
                     }
                     int _numberOfHashes = 1;
-                    //_fileIdenticalSizeAndHashes = _fileIdenticalSizeAndHashes + _countFiles;
                     _fileIdenticalSizeAndHashes = _fileIdenticalSizeAndHashes + _numberOfHashes;
                     bool HaveMoreThanOne = (_fileIdenticalSizeAndHashes >= 1);
                     if (HaveMoreThanOne)
@@ -194,7 +193,7 @@ namespace HashCodeDuplicateFileFinder
                 if (NoFileInFolder)
                 {
                     lblFilesCount.Content = string.Concat("Contains: 0 duplicate groups with duplicate files");
-                    btnDelete.Visibility = Visibility.Hidden;
+                    btnDelete.Visibility = Visibility.Collapsed;
                     System.Windows.MessageBox.Show("There is no duplicate file in the folder!");
                     ClearMaster();
                 }
@@ -205,7 +204,7 @@ namespace HashCodeDuplicateFileFinder
                 btnSelectFolder.Focus();
             }
         }
-        //button 3 Delete from table and from data list
+        // Button 3 Delete from table and from data list
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             List<FileHashes> deletingListFH = new List<FileHashes>();
@@ -219,7 +218,7 @@ namespace HashCodeDuplicateFileFinder
                     counterGL = d.HeshesGroupListGP.Count;
                     if (hgl.IsChecked)
                     {
-                        
+
                         deletingListFH.Add(hgl);
                         File.Delete(hgl.PathP);
                     }
@@ -252,13 +251,12 @@ namespace HashCodeDuplicateFileFinder
 
             if (isEmptyList)
             {
-                btnDelete.Visibility = Visibility.Hidden;
+                btnDelete.Visibility = Visibility.Collapsed;
                 ClearMaster();
             }
             lblFilesCount.Content = ($"Contains:  {lstTableInfo.Items.Count} group/s with identical content in each group (duplicate files)");
-
         }
-        //button 4 clear table and reset all variables
+        // Button 4 clear table and reset all variables
         private void btnCLearAll_Click(object sender, RoutedEventArgs e)
         {
             ClearMaster();
@@ -271,7 +269,7 @@ namespace HashCodeDuplicateFileFinder
                 System.Windows.Forms.Clipboard.SetData(System.Windows.Forms.DataFormats.Text, (object)copyText);
             }
         }
-        //button 5 about & help
+        // Button 5 about & help
         private void btnAbout_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -287,14 +285,14 @@ namespace HashCodeDuplicateFileFinder
         #endregion event
 
         #region Method
-        //method -file hash calculate
+        // Method -file hash calculate
         public string CreateMD5(byte[] ArrayFileContent)
         {
             MD5 md5 = MD5.Create();
-            //content byte convert to hash byte
+            // Content byte convert to hash byte
             byte[] NizhashUbaytima = md5.ComputeHash(ArrayFileContent);
 
-            //convert array in hash bayts in hexadecimal X2 string  with Stringbiledr
+            // Convert array in hash bayts in hexadecimal X2 string  with Stringbiledr
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < NizhashUbaytima.Length; i++)
             {
@@ -302,7 +300,7 @@ namespace HashCodeDuplicateFileFinder
             }
             return sb.ToString();
         }
-        //method clear 
+        // Method clear 
         public void ClearMaster()
         {
             txtblockPath.Text = "";
@@ -311,6 +309,7 @@ namespace HashCodeDuplicateFileFinder
             lstTableInfo.ItemsSource = null;
             btnSelectFolder.Focus();
             lblFilesCount.Content = "Contains: ";
+            lblTitle.Content = "Select Folder and calculate Hash of all repetitive files (identical content):";
 
             _countFiles = 0;
             _fileIdenticalSizeAndHashes = 0;
@@ -323,10 +322,9 @@ namespace HashCodeDuplicateFileFinder
             _data = new List<FilesGroupedByHash>();
 
             BtnColorReseterAndEnabler(Brushes.Red, Brushes.Green, Brushes.Red, false, true, false);
-            btnDelete.Visibility = Visibility.Hidden;
-
+            btnDelete.Visibility = Visibility.Collapsed;
         }
-        ////method button border color reset and enabler
+        // Method button border color reset and enabler
         public void BtnColorReseterAndEnabler(SolidColorBrush colorBtnCalculateHash, SolidColorBrush colorBtnSelectFolder, SolidColorBrush colorBtnClearAll, bool enableBtnCalculateHash, bool enableBtnSelectFolder, bool enableBtnClear)
         {
             btnCalculateHash.BorderBrush = colorBtnCalculateHash;
@@ -338,6 +336,6 @@ namespace HashCodeDuplicateFileFinder
         }
         #endregion method
 
-       
+
     }
 }

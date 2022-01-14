@@ -8,12 +8,10 @@ namespace HashCodeDuplicateFileFinder
 {
     class FilesGroupedByHash
     {
-        #region property
+        #region Property
         public string HashGP { get; set; }
         public List<FileHashes> HeshesGroupListGP { get; set; }
         #endregion
-
-
         
         public FilesGroupedByHash(string hash, List<FileHashes> fileinfo)
         {
