@@ -8,11 +8,11 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("HashCodeDuplicateFileFinder")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Library with common funcionalty for HashCodeDuplicateFileFinder solution")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("BarbyInTech")]
 [assembly: AssemblyProduct("HashCodeDuplicateFileFinder")]
-[assembly: AssemblyCopyright("Copyright ©  2021")]
+[assembly: AssemblyCopyright("Copyright © Barbara Erdec Golović 2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

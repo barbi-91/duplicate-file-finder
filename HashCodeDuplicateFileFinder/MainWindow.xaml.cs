@@ -271,6 +271,19 @@ namespace HashCodeDuplicateFileFinder
                 System.Windows.Forms.Clipboard.SetData(System.Windows.Forms.DataFormats.Text, (object)copyText);
             }
         }
+        //button 5 about & help
+        private void btnAbout_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var aboutWindow = new AboutWindows();
+                aboutWindow.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message, ERROR, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         #endregion event
 
         #region Method
@@ -324,5 +337,7 @@ namespace HashCodeDuplicateFileFinder
             btnCLearAll.IsEnabled = enableBtnClear;
         }
         #endregion method
+
+       
     }
 }

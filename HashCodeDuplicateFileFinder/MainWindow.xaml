@@ -28,7 +28,7 @@
                 </Button>
                 <!--button2-->
                 <Button x:Name="btnCalculateHash"  BorderThickness="2" BorderBrush="Purple" Width="auto" IsEnabled="True"
-                        Background="Honeydew" Click="btnCalculateHash_Click" ToolTip="Calcualte Hash by Content of File">
+                        Background="Honeydew" Click="btnCalculateHash_Click" ToolTip="Calculate Hash by Content of File">
                     <DockPanel LastChildFill="True">
                         <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="Purple" FontSize="12" >Calculate Hash</Label>
                         <Image Width="30" Source="/Images/play.png"/>
@@ -41,6 +41,13 @@
                     <DockPanel LastChildFill="True">
                         <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="Purple" FontSize="12">Clear</Label>
                         <Image Width="30" Source="/Images/eraser.png"/>
+                    </DockPanel>
+                </Button>
+                <Button x:Name="btnAbout"  BorderThickness="2" BorderBrush="Purple" Width="80" Margin="0,0,5,0" IsEnabled="True"
+                        Background="LightCyan" Click="btnAbout_Click" ToolTip="About and help">
+                    <DockPanel LastChildFill="True">
+                        <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="Purple" FontSize="12">About</Label>
+                        <Image Width="30" Source="/Images/about.png"/>
                     </DockPanel>
                 </Button>
                 <!--button4-->
