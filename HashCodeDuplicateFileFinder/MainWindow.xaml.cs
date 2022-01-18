@@ -8,7 +8,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Windows;
 using System.Windows.Media;
-
+using System.Threading.Tasks;
 
 using Microsoft.WindowsAPICodePack.Dialogs;
 
@@ -23,6 +23,7 @@ namespace HashCodeDuplicateFileFinder
         {
             InitializeComponent();
         }
+
 
         #region Fields
         private const string ERROR = "Error";
@@ -76,8 +77,9 @@ namespace HashCodeDuplicateFileFinder
             }
         }
         // Button2 -identical hash (identical size) calculate
-        private void btnCalculateHash_Click(object sender, RoutedEventArgs e)
+        async private void btnCalculateHash_Click(object sender, RoutedEventArgs e)
         {
+
             if (_isTrue)
             {
                 BtnColorReseterAndEnabler(Brushes.Red, Brushes.Red, Brushes.Green, false, false, true);
@@ -121,7 +123,7 @@ namespace HashCodeDuplicateFileFinder
                             byte[] fileContentBytesSizefromPath = File.ReadAllBytes(pathItem);
 
                             // File hash from content string
-                            string fileHashContentfromPath = CreateMD5(fileContentBytesSizefromPath);
+                            string fileHashContentfromPath = await Task.Run(() => CreateMD5(fileContentBytesSizefromPath));
 
                             // Fil dictionary by Hash (key: hash, value: path)
                             if (dictionaryIdenticalHash.ContainsKey(fileHashContentfromPath))
@@ -148,6 +150,7 @@ namespace HashCodeDuplicateFileFinder
                     else
                     {
                         _countFiles = 0;
+                        string fileHashContentfromPath = pairItem.Key;
                         foreach (string pathItem in pairItem.Value)
                         {
                             // Byte size for ctor-property long size
@@ -156,12 +159,6 @@ namespace HashCodeDuplicateFileFinder
 
                             // Filename
                             string fileNamefromPath = System.IO.Path.GetFileName(pathItem);
-
-                            // File content Size in bytes for MD5
-                            byte[] fileContentBytesSizefromPath = File.ReadAllBytes(pathItem);
-
-                            // File hash from content string
-                            string fileHashContentfromPath = CreateMD5(fileContentBytesSizefromPath);
 
                             // File info last modified
                             DateTime lastModified = File.GetLastWriteTime(pathItem);
@@ -175,7 +172,8 @@ namespace HashCodeDuplicateFileFinder
                             // File counter
                             _countFiles += 1;
                         }
-                        FilesGroupedByHash ctor = new FilesGroupedByHash(pairItem.Key, _filesListInfo);
+
+                        FilesGroupedByHash ctor = new FilesGroupedByHash(fileHashContentfromPath, _filesListInfo);
                         _data.Add(ctor);
                         _filesListInfo = new List<FileHashes>();
                     }
@@ -290,13 +288,13 @@ namespace HashCodeDuplicateFileFinder
         {
             MD5 md5 = MD5.Create();
             // Content byte convert to hash byte
-            byte[] NizhashUbaytima = md5.ComputeHash(ArrayFileContent);
+            byte[] HashInByteArray = md5.ComputeHash(ArrayFileContent);
 
             // Convert array in hash bayts in hexadecimal X2 string  with Stringbiledr
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < NizhashUbaytima.Length; i++)
+            for (int i = 0; i < HashInByteArray.Length; i++)
             {
-                sb.Append(NizhashUbaytima[i].ToString("X2"));
+                sb.Append(HashInByteArray[i].ToString("X2"));
             }
             return sb.ToString();
         }
